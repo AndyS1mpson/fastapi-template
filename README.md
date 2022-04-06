@@ -58,27 +58,13 @@ $ pytest .
 * Внутри контейнера запустить
 
 ```console
-$ alembic -n (postgres/clickhouse) revision --autogenerate -m "Add column last_name to User model"
+$ alembic -n postgres revision --autogenerate -m "Add column last_name to User model"
 ```
 
 * Запустить миграцию
 
 ```console
-$ alembic -n (postgres/clickhouse) upgrade head
-```
-
-* Postgres
-```
-$ alembic -n postgres revision --autogenerate -m "text"
 $ alembic -n postgres upgrade head
-$ alembic -n postgres downgrade -1
-```
-
-* Clickhouse
-```
-$ alembic -n clickhouse revision --autogenerate -m "text"
-$ alembic -n clickhouse upgrade head
-$ alembic -n clickhouse downgrade -1
 ```
 
 ## Makefile
@@ -92,13 +78,13 @@ $ make run
 ```
 * Создать миграции в одной из бд
 ```
-$ make migrations (postgres/clickhouse)
+$ make migrations postgres
 ```
 * Выполнить миграции в одной из бд
 ```
-$ make migrate (postgres/clickhouse)
+$ make migrate postgres
 ```
 * Откатить одну из бд на ревизию назад
 ```
-$ make downgrade (postgres/clickhouse)
+$ make downgrade postgres
 ```
