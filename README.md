@@ -8,16 +8,22 @@
 
 ## Разработка
 
+* Добавьте .env файл со следующими переменными окружения:
+```console
+# Строки подключения к БД
+POSTGRES_URL
+TEST_POSTGRES_URL
+
+# Строка подключения для postgres имеет следующий вид:
+# postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}
+```
+
+
+
 * Запустите сервис со всеми зависимостями:
 
 ```console
-$ docker-compose up
-```
-
-* Установите зависимости с poetry
-
-```console
-$ poetry install
+$ docker-compose up --build
 ```
 
 * Добавить [pre-commit](https://github.com/pre-commit/pre-commit) хук
@@ -32,7 +38,7 @@ $ pre-commit install
 Для тестирования необходимо предварительно зайти внутрь контейнера и запустить команду `pytest .`
 
 ```console
-$ docker-compose exec internal_api sh
+$ docker exec <FastAPI container ID> bash
 $ pytest .
 ```
 
@@ -67,24 +73,9 @@ $ alembic -n postgres revision --autogenerate -m "Add column last_name to User m
 $ alembic -n postgres upgrade head
 ```
 
-## Makefile
-* Сбилдить проект
+* Postgres
 ```
-$ make build
-```
-* Запустить проект
-```
-$ make run
-```
-* Создать миграции в одной из бд
-```
-$ make migrations postgres
-```
-* Выполнить миграции в одной из бд
-```
-$ make migrate postgres
-```
-* Откатить одну из бд на ревизию назад
-```
-$ make downgrade postgres
+$ alembic -n postgres revision --autogenerate -m "text"
+$ alembic -n postgres upgrade head
+$ alembic -n postgres downgrade -1
 ```
